@@ -2,7 +2,8 @@ package com.codeerow.currenciesapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.codeerow.currenciesapp.ui.main.MainFragment
+import com.codeerow.currenciesapp.ui.main.CurrenciesFragment
+import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,9 +11,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
+            attachFragment()
         }
+    }
+
+    private fun attachFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, CurrenciesFragment.newInstance())
+            .commitNow()
     }
 }
