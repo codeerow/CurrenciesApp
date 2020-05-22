@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,11 +33,26 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    /** Core */
     implementation("com.github.codeerow:spirit:$project.versions.spirit") { changing = true }
+
+    /** DI */
+    implementation "org.koin:koin-core:$project.versions.koin"
+    implementation "org.koin:koin-core-ext:$project.versions.koin"
+    implementation "org.koin:koin-android:$project.versions.koin"
+    implementation "org.koin:koin-android-scope:$project.versions.koin"
+    implementation "org.koin:koin-android-viewmodel:$project.versions.koin"
+    implementation "org.koin:koin-android-ext:$project.versions.koin"
+
+    /** Logging */
+    implementation "com.jakewharton.timber:timber:$project.versions.tools.timber"
+
+    /** Rx */
+    implementation "io.reactivex.rxjava2:rxjava:2.2.12"
+    implementation "io.reactivex.rxjava2:rxkotlin:$project.versions.rx.kotlin"
+    implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
 }

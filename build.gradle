@@ -19,9 +19,14 @@ buildscript {
                         android   : '2.1.0',
                         relay     : '2.1.0',
                         binding   : '2.2.0',
-                        permission: '0.10.2',
+                        permission: '0.10.2'
 
                 ],
+                tools      : [
+                        jodaTime         : '2.10.1',
+                        jodaTimeConverter: '1.7.1',
+                        timber           : '4.7.1'
+                ]
         ]
     }
     repositories {
