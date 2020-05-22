@@ -3,7 +3,7 @@ package com.codeerow.currenciesapp.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.codeerow.currenciesapp.R
-import com.codeerow.currenciesapp.presentation.ui.main.CurrenciesFragment
+import com.codeerow.currenciesapp.presentation.ui.screens.converter.ConverterFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun attachFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, CurrenciesFragment())
+            .replace(R.id.container, ConverterFragment())
             .commitNow()
     }
 }
