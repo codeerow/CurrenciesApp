@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CurrenciesApp</string>
+    <string name="app_name">Pokenverter</string>
     <string name="main_title">Rates</string>
 
     <string name="aud_currency_name">Australian Dollar</string>
