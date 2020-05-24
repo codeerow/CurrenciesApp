@@ -26,6 +26,12 @@ buildscript {
                         jodaTime         : '2.10.1',
                         jodaTimeConverter: '1.7.1',
                         timber           : '4.7.1'
+                ],
+                network    : [
+                        retrofit                : '2.3.0',
+                        squareupRxJavaAdapter   : '2.0.2',
+                        jakewhartonRxJavaAdapter: '1.0.0',
+                        loggingInterceptor      : '3.6.0',
                 ]
         ]
     }
