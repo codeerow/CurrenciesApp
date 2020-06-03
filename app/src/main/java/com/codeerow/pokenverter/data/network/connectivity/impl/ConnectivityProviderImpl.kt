@@ -14,7 +14,7 @@ import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.N
 
 @RequiresApi(Build.VERSION_CODES.N)
 class ConnectivityProviderImpl(private val cm: ConnectivityManager) :
-    ConnectivityProviderBaseImpl() {
+    BaseConnectivityProvider() {
 
     private val networkCallback = ConnectivityCallback()
 

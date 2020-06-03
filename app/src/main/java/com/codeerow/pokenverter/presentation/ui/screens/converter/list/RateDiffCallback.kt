@@ -6,8 +6,8 @@ import java.math.BigDecimal
 
 
 class RateDiffCallback(
-    private var oldRates: List<Pair<String, BigDecimal>>,
-    private var newRates: List<Pair<String, BigDecimal>>
+    private val oldRates: List<Pair<String, BigDecimal>>,
+    private val newRates: List<Pair<String, BigDecimal>>
 ) : DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

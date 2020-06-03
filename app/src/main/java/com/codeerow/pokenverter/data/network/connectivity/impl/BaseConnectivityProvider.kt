@@ -5,8 +5,7 @@ import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.C
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.NetworkState
 
 
-abstract class ConnectivityProviderBaseImpl : ConnectivityProvider {
-//    private val handler = Handler(Looper.getMainLooper())
+abstract class BaseConnectivityProvider : ConnectivityProvider {
     private val listeners = mutableSetOf<ConnectivityStateListener>()
     private var subscribed = false
 
@@ -33,10 +32,8 @@ abstract class ConnectivityProviderBaseImpl : ConnectivityProvider {
     }
 
     protected fun dispatchChange(state: NetworkState) {
-//        handler.post {
-            for (listener in listeners) {
-                listener.onStateChange(state)
-            }
-//        }
+        for (listener in listeners) {
+            listener.onStateChange(state)
+        }
     }
 }

@@ -14,6 +14,7 @@ import com.codeerow.pokenverter.presentation.ui.core.view.recycler_view.MarginIt
 import com.codeerow.pokenverter.presentation.ui.screens.converter.list.RateAdapter
 import kotlinx.android.synthetic.main.converter_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class ConverterFragment : Fragment() {

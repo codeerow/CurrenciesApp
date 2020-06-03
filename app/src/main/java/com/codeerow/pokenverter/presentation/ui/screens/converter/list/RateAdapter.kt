@@ -15,7 +15,7 @@ class RateAdapter(
     private val onAnchorChanged: (Pair<String, BigDecimal>) -> Unit
 ) : RecyclerView.Adapter<RateViewHolder>() {
 
-    private var entities = initialEntities.toMutableList()
+    private val entities = initialEntities.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RateViewHolder {
         val inflater = LayoutInflater.from(parent.context)

@@ -9,10 +9,10 @@
         android:id="@+id/icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="@string/currency_icon_content_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_aud"
-        android:contentDescription="@string/currency_icon_content_description" />
+        tools:srcCompat="@drawable/ic_aud" />
 
     <TextView
         android:id="@+id/code"

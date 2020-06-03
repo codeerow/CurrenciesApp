@@ -17,7 +17,7 @@ import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.N
 class ConnectivityProviderLegacyImpl(
     private val context: Context,
     private val cm: ConnectivityManager
-) : ConnectivityProviderBaseImpl() {
+) : BaseConnectivityProvider() {
 
     private val receiver = ConnectivityReceiver()
 

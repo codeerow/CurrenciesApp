@@ -8,21 +8,13 @@ import com.codeerow.pokenverter.presentation.ui.core.getCurrencyName
 import kotlinx.android.synthetic.main.layout_item_currency.view.*
 import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 
 
 class RateViewHolder(
     private val onAnchorChanged: (Pair<String, BigDecimal>) -> Unit,
     view: View
 ) : RecyclerView.ViewHolder(view) {
-
-    companion object {
-        private const val AMOUNT_FORMAT = "#0.00"
-    }
-
-    private val formatSymbols = DecimalFormatSymbols()
-
-    private val amountFormat = DecimalFormat(AMOUNT_FORMAT, formatSymbols)
+    private val amountFormat = DecimalFormat("#0.00")
 
 
     private val code = itemView.code
