@@ -11,9 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="48dp"
-        android:paddingLeft="48dp"
-        app:title="@string/main_title" />
+        android:theme="@style/Toolbar"
+        app:title="@string/main_title"
+        tools:ignore="RtlSymmetry" />
 
     <FrameLayout
         android:id="@+id/container"

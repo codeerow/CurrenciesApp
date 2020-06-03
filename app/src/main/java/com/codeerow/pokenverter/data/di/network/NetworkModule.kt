@@ -38,7 +38,7 @@ val networkModule = module {
             }
         })
 
-        PublishSubject.create<NetworkState> {
+        PublishSubject.create {
             connectivityProvider.addListener(object :
                 ConnectivityStateListener {
                 override fun onStateChange(state: NetworkState) {
@@ -50,9 +50,11 @@ val networkModule = module {
 }
 
 private fun provideLoggingInterceptor(): Interceptor {
-    val interceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message ->
-        Timber.tag("OkHttp")
-        Timber.d(message)
+    val interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+        override fun log(message: String) {
+            Timber.tag("OkHttp")
+            Timber.d(message)
+        }
     })
     interceptor.level = HttpLoggingInterceptor.Level.BODY
     return interceptor

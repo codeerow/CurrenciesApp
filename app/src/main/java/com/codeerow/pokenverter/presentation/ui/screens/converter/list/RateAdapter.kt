@@ -12,26 +12,29 @@ import java.math.BigDecimal
 
 class RateAdapter(
     initialEntities: List<Pair<String, BigDecimal>>,
-    private val onTouchItem: (Pair<String, BigDecimal>) -> Unit
-) : RecyclerView.Adapter<ViewHolder>() {
+    private val onAnchorChanged: (Pair<String, BigDecimal>) -> Unit
+) : RecyclerView.Adapter<RateViewHolder>() {
 
     private var entities = initialEntities.toMutableList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RateViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.layout_item_currency, parent, false)
-        return ViewHolder(onTouchItem, view)
+        return RateViewHolder(onAnchorChanged, view)
     }
 
     override fun getItemCount(): Int = entities.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RateViewHolder, position: Int) {
         val item = entities[position]
-        holder.itemView.setOnClickListener { onTouchItem(item) }
         holder.bind(item)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        holder: RateViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
         if (payloads.isEmpty()) super.onBindViewHolder(holder, position, payloads)
         else {
             val bundle = payloads[0] as Bundle

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codeerow.pokenverter.R
 import com.codeerow.pokenverter.presentation.ui.core.databinding.dataBinding
+import com.codeerow.pokenverter.presentation.ui.core.view.dp
 import com.codeerow.pokenverter.presentation.ui.core.view.recycler_view.MarginItemDecoration
 import com.codeerow.pokenverter.presentation.ui.screens.converter.list.RateAdapter
 import kotlinx.android.synthetic.main.converter_fragment.*
@@ -17,27 +18,39 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ConverterFragment : Fragment() {
 
+    companion object {
+        private const val CONTENT_MARGIN = 16
+        private const val LAYOUT_RES = R.layout.converter_fragment
+    }
+
     private val viewModel by viewModel<ConverterViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View {
-        return inflater.inflate(R.layout.converter_fragment, container, false)
+        return inflater.inflate(LAYOUT_RES, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding {
             with(currencies) {
-                val rateAdapter = RateAdapter(viewModel.rates.value ?: listOf()) {
-                    viewModel.setAnchor(it)
-                    scrollToPosition(0)
-                }
+                val rateAdapter = RateAdapter(
+                    initialEntities = viewModel.currencies.value ?: listOf(),
+                    onAnchorChanged = {
+                        viewModel.anchor.accept(it)
+                        scrollToPosition(0)
+                    })
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = rateAdapter
 
                 setHasFixedSize(true)
-                addItemDecoration(MarginItemDecoration(horizontalMargin = 16, verticalMargin = 16))
+                addItemDecoration(
+                    MarginItemDecoration(
+                        horizontalMargin = CONTENT_MARGIN.dp,
+                        verticalMargin = CONTENT_MARGIN.dp
+                    )
+                )
 
-                bind(viewModel.rates) { newRates -> rateAdapter.updateItems(newRates) }
+                bind(viewModel.currencies) { newRates -> rateAdapter.updateItems(newRates) }
             }
         }
     }

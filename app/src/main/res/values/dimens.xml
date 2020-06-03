@@ -1,0 +1,4 @@
+<resources>
+    <!--Toolbar-->
+    <dimen name="toolbar_start_padding">40dp</dimen>
+</resources>

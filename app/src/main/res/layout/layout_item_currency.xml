@@ -11,7 +11,8 @@
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_aud" />
+        tools:srcCompat="@drawable/ic_aud"
+        android:contentDescription="@string/currency_icon_content_description" />
 
     <TextView
         android:id="@+id/code"
@@ -35,7 +36,7 @@
 
     <EditText
         android:id="@+id/amount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:autofillHints="amount"
@@ -49,6 +50,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/name"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="wrap"
         tools:text="100" />
 
 

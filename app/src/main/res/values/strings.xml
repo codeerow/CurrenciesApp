@@ -36,4 +36,5 @@
     <string name="usd_currency_name">United States Dollar</string>
     <string name="zar_currency_name">South African Rand</string>
     <string name="rate_hint">0</string>
+    <string name="currency_icon_content_description">Currency icon</string>
 </resources>

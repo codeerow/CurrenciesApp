@@ -7,9 +7,13 @@ import com.codeerow.pokenverter.presentation.ui.screens.converter.ConverterFragm
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private const val LAYOUT_RES = R.layout.main_activity
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContentView(LAYOUT_RES)
         if (savedInstanceState == null) {
             attachFragment()
         }

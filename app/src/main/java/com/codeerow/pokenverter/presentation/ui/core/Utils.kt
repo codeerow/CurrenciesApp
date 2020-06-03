@@ -16,7 +16,7 @@ fun Context.getCurrencyIconId(code: String): Int {
 
 fun Context.getCurrencyName(code: String): String {
     val currencyNameId = resources.getIdentifier(
-        code.toLowerCase() + "_currency_name",
+        code.toLowerCase(Locale.ROOT) + "_currency_name",
         "string",
         packageName
     )

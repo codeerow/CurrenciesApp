@@ -4,22 +4,20 @@ buildscript {
 
     ext {
         compileSdkVersion = 29
-        minSdkVersion = 23
+        minSdkVersion = 24
         targetSdkVersion = 29
 
         versions = [
-                kotlin     : '1.3.61',
-                gradle     : '3.5.3',
+                kotlin     : '1.3.72',
+                gradle     : '4.0.0',
                 koin       : '2.0.1',
                 spirit     : 'test-SNAPSHOT',
                 databinding: '1.0.0',
                 rx         : [
-                        java      : '3.0.0-RC2',
-                        kotlin    : '2.3.0',
-                        android   : '2.1.0',
-                        relay     : '2.1.0',
-                        binding   : '2.2.0',
-                        permission: '0.10.2'
+                        java   : '2.2.12',
+                        kotlin : '2.3.0',
+                        android: '2.1.0',
+                        relay  : '2.1.1'
 
                 ],
                 tools      : [
@@ -28,10 +26,21 @@ buildscript {
                         timber           : '4.7.1'
                 ],
                 network    : [
-                        retrofit                : '2.3.0',
+                        retrofit                : '2.6.2',
                         squareupRxJavaAdapter   : '2.0.2',
                         jakewhartonRxJavaAdapter: '1.0.0',
-                        loggingInterceptor      : '3.6.0',
+                        loggingInterceptor      : '4.2.1',
+                ],
+                ui         : [
+                        appcompat : '1.1.0',
+                        constraint: '1.1.3',
+                        recycler  : '1.0.0',
+                        core      : '1.3.0'
+                ],
+                testing : [
+                        junit: '4.12',
+                        junitAndroidExt: '1.1.1',
+                        espresso: '3.2.0'
                 ]
         ]
     }
@@ -41,7 +50,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath "com.android.tools.build:gradle:$project.versions.gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$project.versions.kotlin"
 
         // NOTE: Do not place your application dependencies here; they belong

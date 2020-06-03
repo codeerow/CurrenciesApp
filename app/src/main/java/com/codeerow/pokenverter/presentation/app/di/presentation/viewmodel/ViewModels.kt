@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 
 val viewModels = module {
-    viewModel { ConverterViewModel(get()) }
+    viewModel { ConverterViewModel(fetchRatesUseCase = get()) }
 }
 

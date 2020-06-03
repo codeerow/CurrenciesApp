@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Toolbar">
+        <item name="android:paddingLeft">@dimen/toolbar_start_padding</item>
+        <item name="android:paddingStart">@dimen/toolbar_start_padding</item>
+    </style>
+
 </resources>

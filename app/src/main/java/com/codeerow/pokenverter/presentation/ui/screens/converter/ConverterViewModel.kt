@@ -1,47 +1,40 @@
 package com.codeerow.pokenverter.presentation.ui.screens.converter
 
 import androidx.lifecycle.MutableLiveData
-import com.codeerow.pokenverter.domain.usecases.ObserveRatesUseCase
+import com.codeerow.pokenverter.domain.usecases.UseCase
+import com.codeerow.pokenverter.domain.usecases.impl.FetchCurrenciesUseCase
 import com.codeerow.spirit.mvvm.viewmodel.RxViewModel
-import io.reactivex.Completable
-import io.reactivex.disposables.Disposables
+import com.jakewharton.rxrelay2.BehaviorRelay
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import java.math.BigDecimal
+import java.util.concurrent.TimeUnit
 
 
-class ConverterViewModel(private val observeRatesUseCase: ObserveRatesUseCase) : RxViewModel() {
+class ConverterViewModel(private val fetchRatesUseCase: UseCase<FetchCurrenciesUseCase.Input, FetchCurrenciesUseCase.Output>) :
+    RxViewModel() {
 
-    val rates = MutableLiveData<List<Pair<String, BigDecimal>>>(listOf())
+    companion object {
+        private const val INITIAL_DELAY = 0L
+        private const val INTERVAL_PERIOD = 1L
+        private val INTERVAL_TIME_UNIT = TimeUnit.SECONDS
+    }
 
-    private var disposable = Disposables.empty()
+    val anchor: BehaviorRelay<Pair<String?, BigDecimal>> =
+        BehaviorRelay.createDefault(null to BigDecimal.ZERO)
+
+    val currencies = MutableLiveData<List<Pair<String, BigDecimal>>>(listOf())
 
     init {
-        subscribeForRates(null)
-    }
-
-    private fun subscribeForRates(anchorCurrency: String?) {
-        disposable.dispose()
-        disposable = Completable.fromRunnable {
-            if (anchorCurrency != null) {
-                rates.value?.toMutableList()?.let { newList ->
-                    val anchor = newList.find { it.first == anchorCurrency } ?: TODO()
-                    newList.remove(anchor)
-                    newList.add(0, anchor)
-                    rates.postValue(newList)
+        anchor.switchMap { anchor ->
+            Observable.interval(INITIAL_DELAY, INTERVAL_PERIOD, INTERVAL_TIME_UNIT)
+                .flatMapSingle {
+                    val list = currencies.value ?: listOf()
+                    val request = FetchCurrenciesUseCase.Input(anchor, list)
+                    fetchRatesUseCase.execute(request)
                 }
-            }
-        }.andThen(observeRatesUseCase.execute(ObserveRatesUseCase.Request(anchorCurrency)))
-            .doOnNext { rates ->
-                this.rates.postValue(if (this.rates.value?.isEmpty() == true) rates.toList()
-                else {
-                    this.rates.value?.map { it.first to rates.getOrElse(it.first) { BigDecimal("0.0") } }
-                })
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribeByViewModel()
-    }
-
-    fun setAnchor(rate: Pair<String, BigDecimal>) {
-        subscribeForRates(rate.first)
+                .map(FetchCurrenciesUseCase.Output::currencies)
+                .doOnNext(currencies::postValue)
+        }.subscribeOn(Schedulers.io()).subscribeByViewModel()
     }
 }
