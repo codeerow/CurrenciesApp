@@ -1,7 +1,8 @@
-package com.codeerow.pokenverter.presentation.app.di.domain
+package com.codeerow.pokenverter.presentation.di.domain
 
 import com.codeerow.pokenverter.data.di.REAL
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider
+import com.codeerow.pokenverter.data.schedulers.AndroidSchedulerProvider
 import com.codeerow.pokenverter.domain.usecases.UseCase
 import com.codeerow.pokenverter.domain.usecases.impl.ObserveCurrencies
 import io.reactivex.Observable
@@ -22,7 +23,12 @@ val domain = listOf(
                     else Observable.just(throwable)
                 }
             }
-            ObserveCurrencies(repository = get(REAL), retryPolicy = networkStateRetryPolicy)
+            val schedulers = AndroidSchedulerProvider()
+            ObserveCurrencies(
+                repository = get(REAL),
+                retryPolicy = networkStateRetryPolicy,
+                schedulers = schedulers
+            )
         }
     }
 )

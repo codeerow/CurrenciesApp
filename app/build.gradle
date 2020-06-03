@@ -50,8 +50,11 @@ dependencies {
 
     /** Testing */
     testImplementation "junit:junit:$project.versions.testing.junit"
+    testImplementation "androidx.arch.core:core-testing:$project.versions.testing.arch"
     androidTestImplementation "androidx.test.ext:junit:$project.versions.testing.junitAndroidExt"
     androidTestImplementation "androidx.test.espresso:espresso-core:$project.versions.testing.espresso"
+    testImplementation "org.mockito:mockito-core:$project.versions.testing.mockito"
+    testImplementation "org.mockito:mockito-inline:$project.versions.testing.mockito"
 
     /** Core */
     implementation("com.github.codeerow:spirit:$project.versions.spirit") { changing = true }

@@ -1,6 +1,7 @@
 package com.codeerow.pokenverter.domain.usecases.impl
 
 import com.codeerow.pokenverter.domain.repository.RatesRepository
+import com.codeerow.pokenverter.domain.schedulers.SchedulerProvider
 import com.codeerow.pokenverter.domain.usecases.UseCase
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -10,7 +11,8 @@ import java.util.concurrent.TimeUnit
 
 class ObserveCurrencies(
     private val repository: RatesRepository,
-    private val retryPolicy: (Observable<Throwable>) -> Observable<*>
+    private val retryPolicy: (Observable<Throwable>) -> Observable<*>,
+    private val schedulers: SchedulerProvider
 ) : UseCase<ObserveCurrencies.Input, Observable<ObserveCurrencies.Output>>() {
 
     companion object {
@@ -27,8 +29,12 @@ class ObserveCurrencies(
     data class Output(val currencies: List<Pair<String, BigDecimal>>)
 
     override fun invoke(input: Input): Observable<Output> {
-        return Observable.interval(INITIAL_DELAY, INTERVAL_PERIOD, TIME_UNIT)
-            .flatMapSingle { readRates(input) }.retryWhen(retryPolicy)
+        return Observable.interval(
+            INITIAL_DELAY,
+            INTERVAL_PERIOD,
+            TIME_UNIT,
+            schedulers.computation()
+        ).flatMapSingle { readRates(input) }.retryWhen(retryPolicy)
     }
 
     private fun readRates(input: Input): Single<Output> = with(input) {

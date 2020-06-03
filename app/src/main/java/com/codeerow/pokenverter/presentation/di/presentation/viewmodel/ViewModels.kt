@@ -1,4 +1,4 @@
-package com.codeerow.pokenverter.presentation.app.di.presentation.viewmodel
+package com.codeerow.pokenverter.presentation.di.presentation.viewmodel
 
 import com.codeerow.pokenverter.presentation.ui.screens.converter.ConverterViewModel
 import org.koin.android.viewmodel.dsl.viewModel
