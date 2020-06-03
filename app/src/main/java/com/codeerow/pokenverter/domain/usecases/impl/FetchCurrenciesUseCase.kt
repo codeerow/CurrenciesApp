@@ -7,14 +7,16 @@ import java.math.BigDecimal
 
 
 class FetchCurrenciesUseCase(private val repository: RatesRepository) :
-    UseCase<FetchCurrenciesUseCase.Input, FetchCurrenciesUseCase.Output>() {
+    UseCase<FetchCurrenciesUseCase.Input, Single<FetchCurrenciesUseCase.Output>>() {
 
     data class Input(
         val anchor: Pair<String?, BigDecimal>,
         val currencies: List<Pair<String, BigDecimal>>
     )
 
-    data class Output(val currencies: List<Pair<String, BigDecimal>>)
+    data class Output(
+        val currencies: List<Pair<String, BigDecimal>>
+    )
 
 
     override fun execute(input: Input): Single<Output> = with(input) {

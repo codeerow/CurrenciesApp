@@ -6,13 +6,17 @@ import com.codeerow.pokenverter.domain.usecases.impl.FetchCurrenciesUseCase
 import com.codeerow.spirit.mvvm.viewmodel.RxViewModel
 import com.jakewharton.rxrelay2.BehaviorRelay
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 
 
-class ConverterViewModel(private val fetchRatesUseCase: UseCase<FetchCurrenciesUseCase.Input, FetchCurrenciesUseCase.Output>) :
-    RxViewModel() {
+class ConverterViewModel(
+    private val fetchRatesUseCase: UseCase<FetchCurrenciesUseCase.Input, Single<FetchCurrenciesUseCase.Output>>,
+    fetchRatesRetryPolicy: (Observable<Throwable>) -> Observable<*>
+) : RxViewModel() {
 
     companion object {
         private const val INITIAL_DELAY = 0L
@@ -35,6 +39,9 @@ class ConverterViewModel(private val fetchRatesUseCase: UseCase<FetchCurrenciesU
                 }
                 .map(FetchCurrenciesUseCase.Output::currencies)
                 .doOnNext(currencies::postValue)
-        }.subscribeOn(Schedulers.io()).subscribeByViewModel()
+        }
+            .retryWhen(fetchRatesRetryPolicy)
+            .subscribeOn(Schedulers.io())
+            .subscribeByViewModel()
     }
 }
