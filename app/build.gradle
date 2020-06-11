@@ -10,8 +10,8 @@ android {
         applicationId "com.codeerow.pokenverter"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode Integer.parseInt(project.VERSION_CODE)
-        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
 
         multiDexEnabled true
 
@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         all {
-            buildConfigField "String", "URL", "\"https://hiring.revout.codes/api/android/\""
+            buildConfigField "String", "URL", "\"https://hiring.revolut.codes/api/android/\""
         }
         release {
             minifyEnabled false
@@ -46,47 +46,47 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$project.versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 
-    implementation("com.github.codeerow:spirit:$project.versions.spirit") { changing = true }
+    implementation("com.github.codeerow:spirit:$versions.spirit") { changing = true }
 
     /** Testing */
-    androidTestImplementation "androidx.test.ext:junit:$project.versions.testing.junitAndroidExt"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$project.versions.testing.espresso"
-    testImplementation "junit:junit:$project.versions.testing.junit"
-    testImplementation "androidx.arch.core:core-testing:$project.versions.testing.arch"
-    testImplementation "org.mockito:mockito-core:$project.versions.testing.mockito"
-    testImplementation "org.mockito:mockito-inline:$project.versions.testing.mockito"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$project.versions.testing.mockitoKotlin"
-    testImplementation "org.mockito:mockito-inline:$project.versions.testing.mockitoInline"
-    testImplementation "org.koin:koin-test:$project.versions.koin"
+    androidTestImplementation "androidx.test.ext:junit:$versions.testing.junitAndroidExt"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.testing.espresso"
+    testImplementation "junit:junit:$versions.testing.junit"
+    testImplementation "androidx.arch.core:core-testing:$versions.testing.arch"
+    testImplementation "org.mockito:mockito-core:$versions.testing.mockito"
+    testImplementation "org.mockito:mockito-inline:$versions.testing.mockito"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.testing.mockitoKotlin"
+    testImplementation "org.mockito:mockito-inline:$versions.testing.mockitoInline"
+    testImplementation "org.koin:koin-test:$versions.koin"
 
     /** DI */
-    implementation "org.koin:koin-core:$project.versions.koin"
-    implementation "org.koin:koin-core-ext:$project.versions.koin"
-    implementation "org.koin:koin-android:$project.versions.koin"
-    implementation "org.koin:koin-android-scope:$project.versions.koin"
-    implementation "org.koin:koin-android-viewmodel:$project.versions.koin"
-    implementation "org.koin:koin-android-ext:$project.versions.koin"
+    implementation "org.koin:koin-core:$versions.koin"
+    implementation "org.koin:koin-core-ext:$versions.koin"
+    implementation "org.koin:koin-android:$versions.koin"
+    implementation "org.koin:koin-android-scope:$versions.koin"
+    implementation "org.koin:koin-android-viewmodel:$versions.koin"
+    implementation "org.koin:koin-android-ext:$versions.koin"
 
     /** Logging */
-    implementation "com.jakewharton.timber:timber:$project.versions.tools.timber"
+    implementation "com.jakewharton.timber:timber:$versions.tools.timber"
 
     /** Rx */
-    implementation "io.reactivex.rxjava2:rxjava:$project.versions.rx.java"
-    implementation "io.reactivex.rxjava2:rxkotlin:$project.versions.rx.kotlin"
-    implementation "com.jakewharton.rxrelay2:rxrelay:$project.versions.rx.relay"
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rx.java"
+    implementation "io.reactivex.rxjava2:rxkotlin:$versions.rx.kotlin"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$versions.rx.relay"
 
     /** UI */
-    implementation "androidx.appcompat:appcompat:$project.versions.ui.appcompat"
-    implementation "androidx.core:core-ktx:$project.versions.ui.core"
-    implementation "androidx.constraintlayout:constraintlayout:$project.versions.ui.constraint"
+    implementation "androidx.appcompat:appcompat:$versions.ui.appcompat"
+    implementation "androidx.core:core-ktx:$versions.ui.core"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.ui.constraint"
 
     /** Network */
-    implementation "com.squareup.retrofit2:retrofit:$project.versions.network.retrofit"
-    implementation "com.squareup.retrofit2:retrofit-mock:$project.versions.network.retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$project.versions.network.retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava:$project.versions.network.squareupRxJavaAdapter"
-    implementation "com.squareup.okhttp3:logging-interceptor:$project.versions.network.loggingInterceptor"
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$project.versions.network.jakewhartonRxJavaAdapter"
+    implementation "com.squareup.retrofit2:retrofit:$versions.network.retrofit"
+    implementation "com.squareup.retrofit2:retrofit-mock:$versions.network.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.network.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$versions.network.squareupRxJavaAdapter"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.network.loggingInterceptor"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$versions.network.jakewhartonRxJavaAdapter"
 }
