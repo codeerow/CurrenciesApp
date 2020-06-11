@@ -47,7 +47,7 @@ class RateAdapter(
         }
     }
 
-    fun updateItems(newEntities: List<Pair<String, BigDecimal>>) {
+    fun submitList(newEntities: List<Pair<String, BigDecimal>>) {
         val diffCallback = RateDiffCallback(entities, newEntities)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         diffResult.dispatchUpdatesTo(this)

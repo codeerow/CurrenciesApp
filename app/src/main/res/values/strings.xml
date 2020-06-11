@@ -41,4 +41,5 @@
 
     <!--Errors-->
     <string name="network_disconnected">Has no internet connection</string>
+    <string name="application_error_default_message">Something went wrong.</string>
 </resources>

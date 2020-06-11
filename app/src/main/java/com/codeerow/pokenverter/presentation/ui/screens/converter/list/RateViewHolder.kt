@@ -17,13 +17,7 @@ class RateViewHolder(
     private val amountFormat = DecimalFormat("#0.00")
 
 
-    private val code = itemView.code
-    private val name = itemView.name
-    private val amount = itemView.amount
-    private val icon = itemView.icon
-
-
-    fun bind(item: Pair<String, BigDecimal>) {
+    fun bind(item: Pair<String, BigDecimal>) = with(itemView) {
         val (currency, rate) = item
         code.text = currency
         with(itemView.context) {
@@ -42,7 +36,7 @@ class RateViewHolder(
         bindAmount(rate)
     }
 
-    fun bindAmount(rate: BigDecimal) {
+    fun bindAmount(rate: BigDecimal) = with(itemView) {
         if (!amount.isFocused) {
             if (rate > BigDecimal.ZERO) amount.setText(amountFormat.format(rate))
             else amount.setText("")

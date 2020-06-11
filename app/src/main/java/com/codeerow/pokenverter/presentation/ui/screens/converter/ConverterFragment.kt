@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,6 @@ import com.codeerow.pokenverter.presentation.ui.core.view.recycler_view.MarginIt
 import com.codeerow.pokenverter.presentation.ui.screens.converter.list.RateAdapter
 import kotlinx.android.synthetic.main.converter_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 class ConverterFragment : Fragment() {
@@ -40,6 +40,7 @@ class ConverterFragment : Fragment() {
                         viewModel.anchor.accept(it)
                         scrollToPosition(0)
                     })
+
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 adapter = rateAdapter
 
@@ -51,7 +52,10 @@ class ConverterFragment : Fragment() {
                     )
                 )
 
-                bind(viewModel.currencies) { newRates -> rateAdapter.updateItems(newRates) }
+                bind(viewModel.currencies) { newRates -> rateAdapter.submitList(newRates) }
+                bind(viewModel.errorRes) { messageRes ->
+                    Toast.makeText(requireContext(), messageRes, Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

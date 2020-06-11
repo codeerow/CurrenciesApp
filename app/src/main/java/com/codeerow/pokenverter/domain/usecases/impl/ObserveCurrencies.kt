@@ -1,7 +1,6 @@
 package com.codeerow.pokenverter.domain.usecases.impl
 
 import com.codeerow.pokenverter.domain.repository.RatesRepository
-import com.codeerow.pokenverter.domain.schedulers.SchedulerProvider
 import com.codeerow.pokenverter.domain.usecases.UseCase
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -11,8 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class ObserveCurrencies(
     private val repository: RatesRepository,
-    private val retryPolicy: (Observable<Throwable>) -> Observable<*>,
-    private val schedulers: SchedulerProvider
+    private val retryPolicy: (Throwable) -> Observable<*>
 ) : UseCase<ObserveCurrencies.Input, Observable<ObserveCurrencies.Output>>() {
 
     companion object {
@@ -22,7 +20,7 @@ class ObserveCurrencies(
     }
 
     data class Input(
-        val anchor: Pair<String?, BigDecimal>,
+        val anchor: Pair<String?, BigDecimal?>,
         val currencies: List<Pair<String, BigDecimal>>
     )
 
@@ -32,9 +30,8 @@ class ObserveCurrencies(
         return Observable.interval(
             INITIAL_DELAY,
             INTERVAL_PERIOD,
-            TIME_UNIT,
-            schedulers.computation()
-        ).flatMapSingle { readRates(input) }.retryWhen(retryPolicy)
+            TIME_UNIT
+        ).flatMapSingle { readRates(input) }.retryWhen { it.flatMap(retryPolicy) }
     }
 
     private fun readRates(input: Input): Single<Output> = with(input) {
@@ -50,7 +47,7 @@ class ObserveCurrencies(
                     }
                     val newCurrencies = map {
                         val rate = rates.getOrDefault(it.first, BigDecimal.ZERO)
-                        val amount = rate * input.anchor.second
+                        val amount = rate * (input.anchor.second ?: BigDecimal.ONE)
                         it.first to amount
                     }
                     Output(newCurrencies)

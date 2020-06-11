@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.codeerow.pokenverter"
@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         all {
-            buildConfigField "String", "URL", "\"https://hiring.revolut.codes/api/android/\""
+            buildConfigField "String", "URL", "\"https://hiring.revout.codes/api/android/\""
         }
         release {
             minifyEnabled false
@@ -48,16 +48,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$project.versions.kotlin"
 
+    implementation("com.github.codeerow:spirit:$project.versions.spirit") { changing = true }
+
     /** Testing */
-    testImplementation "junit:junit:$project.versions.testing.junit"
-    testImplementation "androidx.arch.core:core-testing:$project.versions.testing.arch"
     androidTestImplementation "androidx.test.ext:junit:$project.versions.testing.junitAndroidExt"
     androidTestImplementation "androidx.test.espresso:espresso-core:$project.versions.testing.espresso"
+    testImplementation "junit:junit:$project.versions.testing.junit"
+    testImplementation "androidx.arch.core:core-testing:$project.versions.testing.arch"
     testImplementation "org.mockito:mockito-core:$project.versions.testing.mockito"
     testImplementation "org.mockito:mockito-inline:$project.versions.testing.mockito"
-
-    /** Core */
-    implementation("com.github.codeerow:spirit:$project.versions.spirit") { changing = true }
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$project.versions.testing.mockitoKotlin"
+    testImplementation "org.mockito:mockito-inline:$project.versions.testing.mockitoInline"
+    testImplementation "org.koin:koin-test:$project.versions.koin"
 
     /** DI */
     implementation "org.koin:koin-core:$project.versions.koin"

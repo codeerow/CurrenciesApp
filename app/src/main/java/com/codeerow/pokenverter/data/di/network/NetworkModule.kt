@@ -2,7 +2,7 @@ package com.codeerow.pokenverter.data.di.network
 
 import com.codeerow.pokenverter.BuildConfig
 import com.codeerow.pokenverter.data.network.api.RatesAPI
-import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.Companion.createProvider
+import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.ConnectivityStateListener
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.NetworkState
 import com.google.gson.GsonBuilder
@@ -27,9 +27,10 @@ val networkModule = module {
     single { provideRetrofit(client = get()) }
     single { provideApi<RatesAPI>(retrofit = get()) }
 
+    /** Connectivity */
     single<Observable<NetworkState>> {
         val context = androidContext()
-        val connectivityProvider = createProvider(context)
+        val connectivityProvider = ConnectivityProvider.createProvider(context)
         connectivityProvider.subscribe()
 
         registerCallback(object : ScopeCallback {
