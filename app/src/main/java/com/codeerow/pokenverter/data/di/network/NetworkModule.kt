@@ -8,7 +8,6 @@ import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.N
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,7 +38,7 @@ val networkModule = module {
             }
         })
 
-        PublishSubject.create {
+        Observable.create {
             connectivityProvider.addListener(object :
                 ConnectivityStateListener {
                 override fun onStateChange(state: NetworkState) {

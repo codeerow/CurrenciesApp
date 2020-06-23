@@ -4,37 +4,40 @@ import com.codeerow.pokenverter.domain.repository.RatesRepository
 import com.codeerow.pokenverter.domain.usecases.UseCase
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 import java.math.BigDecimal
-import java.util.concurrent.TimeUnit
 
 
-class ObserveCurrencies(
-    private val repository: RatesRepository,
-    private val retryPolicy: (Throwable) -> Observable<*>
-) : UseCase<ObserveCurrencies.Input, Observable<ObserveCurrencies.Output>>() {
-
-    companion object {
-        private const val INITIAL_DELAY = 0L
-        private const val INTERVAL_PERIOD = 1L
-        private val TIME_UNIT = TimeUnit.SECONDS
-    }
+class FetchCurrencies(
+    private val repository: RatesRepository
+) : UseCase<FetchCurrencies.Input, Observable<FetchCurrencies.Output>>() {
 
     data class Input(
         val anchor: Pair<String?, BigDecimal?>,
         val currencies: List<Pair<String, BigDecimal>>
     )
 
-    data class Output(val currencies: List<Pair<String, BigDecimal>>)
-
-    override fun invoke(input: Input): Observable<Output> {
-        return Observable.interval(
-            INITIAL_DELAY,
-            INTERVAL_PERIOD,
-            TIME_UNIT
-        ).flatMapSingle { readRates(input) }.retryWhen { it.flatMap(retryPolicy) }
+    sealed class Output {
+        class Processing(val initial: Boolean) : Output()
+        class Success(val currencies: List<Pair<String, BigDecimal>>) : Output()
+        class Failure(val throwable: Throwable) : Output()
     }
 
-    private fun readRates(input: Input): Single<Output> = with(input) {
+    private val state: BehaviorSubject<Output> = BehaviorSubject.create()
+
+
+    override fun invoke(input: Input): Observable<Output> {
+        return readRates(input)
+            .doOnSubscribe {
+                val initial = input.currencies.isEmpty()
+                state.onNext(Output.Processing(initial))
+            }
+            .doOnSuccess { state.onNext(Output.Success(it)) }
+            .doOnError { state.onNext(Output.Failure(it)) }
+            .flatMapObservable { state }
+    }
+
+    private fun readRates(input: Input): Single<List<Pair<String, BigDecimal>>> = with(input) {
         return repository.read(anchor.first)
             .map { rates ->
                 val currencies = (if (input.currencies.isEmpty()) rates.toList()
@@ -50,7 +53,7 @@ class ObserveCurrencies(
                         val amount = rate * (input.anchor.second ?: BigDecimal.ONE)
                         it.first to amount
                     }
-                    Output(newCurrencies)
+                    newCurrencies
                 }
             }
     }

@@ -3,10 +3,11 @@ package com.codeerow.pokenverter.data.network.connectivity.impl
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.ConnectivityStateListener
 import com.codeerow.pokenverter.data.network.connectivity.ConnectivityProvider.NetworkState
+import java.util.*
 
 
 abstract class BaseConnectivityProvider : ConnectivityProvider {
-    private val listeners = mutableSetOf<ConnectivityStateListener>()
+    private val listeners = Collections.synchronizedList(mutableListOf<ConnectivityStateListener>())
     private var subscribed = false
 
 
@@ -31,6 +32,7 @@ abstract class BaseConnectivityProvider : ConnectivityProvider {
         }
     }
 
+    @Synchronized
     protected fun dispatchChange(state: NetworkState) {
         for (listener in listeners) {
             listener.onStateChange(state)

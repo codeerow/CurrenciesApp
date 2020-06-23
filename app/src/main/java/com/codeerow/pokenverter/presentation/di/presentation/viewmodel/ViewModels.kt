@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 val viewModels = module {
     viewModel {
-        ConverterViewModel(observeCurrencies = get())
+        ConverterViewModel(fetchCurrencies = get(), retryPolicy = get())
     }
 }
 
